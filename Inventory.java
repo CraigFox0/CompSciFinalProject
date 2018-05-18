@@ -30,6 +30,12 @@ public class Inventory {
 		MAX_ITEMS=i.MAX_ITEMS;
 		numItems=i.numItems;
 	}
+	public void sort(String cmprBy){
+		items.sort(new CompareItems(cmprBy));
+	}
+	public void sort(String cmprBy, String ascdesc){
+		items.sort(new CompareItems(cmprBy,ascdesc));
+	}
 	public boolean addItem(Item i) {
 		if(numItems==MAX_ITEMS)
 			return false;
@@ -87,7 +93,7 @@ public class Inventory {
 	}
 	//searches the inventory and returns a priority queue of items that meet the search criteria sorted by a given metric
 	public PriorityQueue<Item> search(String searchCriteria, String sortBy){
-		PriorityQueue<Item> results=new PriorityQueue<Item>(10, new compareItems(sortBy));
+		PriorityQueue<Item> results=new PriorityQueue<Item>(10, new CompareItems(sortBy));
 		for(int i=0;i<items.size();i++){
 			if(items.get(i).name.equals(searchCriteria)) results.add(items.get(i));
 			if(items.get(i).partNum.equals(searchCriteria)) results.add(items.get(i));
@@ -101,7 +107,7 @@ public class Inventory {
 		return results;
 	}
 	public PriorityQueue<Item> search(String searchCriteria, String sortBy, int numResults){
-		PriorityQueue<Item> results=new PriorityQueue<Item>(numResults, new compareItems(sortBy));
+		PriorityQueue<Item> results=new PriorityQueue<Item>(numResults, new CompareItems(sortBy));
 		//iterates through items and adds items that meet the search criteria to results
 		for(int i=0;i<items.size();i++){
 			if(items.get(i).name.equals(searchCriteria)) results.add(items.get(i));
@@ -115,7 +121,7 @@ public class Inventory {
 		}
 		return results;
 	}
-	public class compareItems implements Comparator<Item>{
+	public class CompareItems implements Comparator<Item>{
 		String compareBy, order;
 		public compareItems(String compBy){
 			compareBy=compBy;
