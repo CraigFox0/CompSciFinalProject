@@ -4,7 +4,7 @@ public class Item {
 	String[] tags;
 	int quantity, unit_cost;
 	Inventory inventory;
-	private LocalDateTime dateTimeEntered, dateTimeRetrieved, dateTimeReturned;
+	public LocalDateTime dateTimeEntered, dateTimeRetrieved, dateTimeReturned;
 	
 	public Item(String commonName, String id, int amount, String website, int cost){
 		name = commonName;
@@ -36,8 +36,8 @@ public class Item {
 		dateTimeReturned=LocalDateTime.now();
 	}
 	public String toString() {
-		String s="";
-		return s;
+		if(inventory==null) return "Name: " + name + "\tPart Number: " + partNum + "\tWebsite: " + link + "\tQuantity: " + quantity + "\tUnit cost: " + unit_cost + "\tTotal cost: " + (unit_cost*quantity) +  "\tDate and Time Entered: " + dateTimeEntered + "\tDate and Time Retrieved: " + dateTimeRetrieved + "\tDate and Time Returned: " + dateTimeReturned;
+		return "Name: " + name + "\tPart Number: " + partNum + "\tWebsite: " + link + "\tQuantity: " + quantity + "\tUnit cost: " + unit_cost + "\tTotal cost: " + (unit_cost*quantity) + "\tInventory: " + inventory.name + "\tDate and Time Entered: " + dateTimeEntered + "\tDate and Time Retrieved: " + dateTimeRetrieved + "\tDate and Time Returned: " + dateTimeReturned;
 	}
 }
 
