@@ -37,7 +37,7 @@ public class Item {
 	}
 	public String toString() {
 		if(inventory==null) return "Name: " + name + "\tPart Number: " + partNum + "\tWebsite: " + link + "\tQuantity: " + quantity + "\tUnit cost: " + unit_cost + "\tTotal cost: " + (unit_cost*quantity) +  "\tDate and Time Entered: " + dateTimeEntered + "\tDate and Time Retrieved: " + dateTimeRetrieved + "\tDate and Time Returned: " + dateTimeReturned;
-		return "Name: " + name + "\tPart Number: " + partNum + "\tWebsite: " + link + "\tQuantity: " + quantity + "\tUnit cost: " + unit_cost + "\tTotal cost: " + (unit_cost*quantity) + "\tInventory: " + inventory.name + "\tDate and Time Entered: " + dateTimeEntered + "\tDate and Time Retrieved: " + dateTimeRetrieved + "\tDate and Time Returned: " + dateTimeReturned;
+		return "Name: " + name + "\tPart Number: " + partNum + "\tWebsite: " + link + "\tQuantity: " + quantity + "\tUnit cost: " + unit_cost + "\tTotal cost: " + (unit_cost*quantity) + "\tInventory: " + inventory.id + "\tDate and Time Entered: " + dateTimeEntered + "\tDate and Time Retrieved: " + dateTimeRetrieved + "\tDate and Time Returned: " + dateTimeReturned;
 	}
 }
 

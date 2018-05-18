@@ -3,14 +3,17 @@ public class Inventory {
 	int totalValue;
 	final int MAX_ITEMS;
 	int numItems;
+	String id;
 	ArrayList<Item> items;
-	public Inventory(){
+	public Inventory(String name){
+		id = name;
 		totalValue=0;
 		items=new ArrayList<Item>();
 		MAX_ITEMS=500;
 		numItems=0;
 	}
-	public Inventory(ArrayList<Item> i){
+	public Inventory(String name, ArrayList<Item> i){
+		id = name;
 		totalValue=0;
 		numItems=0;
 		for(int j=0;j<i.size();j++){
@@ -20,7 +23,8 @@ public class Inventory {
 		items=i;
 		MAX_ITEMS=500;
 	}
-	public Inventory(Inventory i){
+	public Inventory(String name, Inventory i){
+		id = name;
 		totalValue=i.totalValue;
 		items=i.items;
 		MAX_ITEMS=i.MAX_ITEMS;
@@ -59,10 +63,11 @@ public class Inventory {
 		for(int i=0;i<items.size();i++){
 			System.out.println(items.get(i).name+"\t"+items.get(i).quantity+"\t"+items.get(i).partNum+"\t"+items.get(i).unit_cost+"\t"+items.get(i).link);
 		}
-		System.out.println("--End of Inventory--);
+		System.out.println("--End of Inventory--");
 	}
 	//searches the inventory and returns an array list of items that meet the search criteria sorted by relevance
 	public ArrayList<Item> search(String searchCriteria){
+		ArrayList<Item> results=new ArrayList<Item>();
 		int relevance=0;
 		for(int i=0;i<items.size();i++){
 			if(items.get(i).name.contains(searchCriteria)) relevance+=3;
@@ -121,30 +126,54 @@ public class Inventory {
 			order=ascDesc;
 		}
 		public int compare(Item x, Item y){
-			if(compareBy.equals("quantity))
-				if(order.equals("ascending") return x.quantity-y.quantity;
+			if(compareBy.equals("quantity")) {
+				if(order.equals("ascending")) {
+					return x.quantity-y.quantity;
+			}
 				return y.quantity-x.quantity;
-			if(compareBy.equals("unit_cost"))
-				if(order.equals("ascending") return x.unit_cost-y.unit_cost;
+		}
+			if(compareBy.equals("unit_cost")) {
+				if(order.equals("ascending")) {
+					return x.unit_cost-y.unit_cost;
+				}
 				return y.unit_cost-x.unit_cost;
-			if(compareBy.equals("dateTimeEntered"))
-				if(order.equals("ascending") return x.dateTimeEntered.compareTo(y.dateTimeEntered);
+			}
+			if(compareBy.equals("dateTimeEntered")) {
+				if(order.equals("ascending")) {
+					return x.dateTimeEntered.compareTo(y.dateTimeEntered);
+				}
 				return y.dateTimeEntered.compareTo(x.dateTimeEntered);
-			if(compareBy.equals("dateTimeRetrieved"))
-				if(order.equals("ascending") return x.dateTimeRetrieved.compareTo(y.dateTimeRetrieved);
+			}
+			if(compareBy.equals("dateTimeRetrieved")) {
+				if(order.equals("ascending")) {
+					return x.dateTimeRetrieved.compareTo(y.dateTimeRetrieved);
+			}
 				return y.dateTimeRetrieved.compareTo(x.dateTimeRetrieved);
-			if(compareBy.equals("dateTimeReturned"))
-				if(order.equals("ascending") return x.dateTimeReturned.compareTo(y.dateTimeReturned);
+		}
+			if(compareBy.equals("dateTimeReturned")) {
+				if(order.equals("ascending")) {
+					return x.dateTimeReturned.compareTo(y.dateTimeReturned);
+				}
 				return y.dateTimeReturned.compareTo(x.dateTimeReturned);
-			if(compareBy.equals("name"))
-				if(order.equals("ascending") return x.name.compareTo(y.name);
+			}
+			if(compareBy.equals("name")) {
+				if(order.equals("ascending")) {
+					return x.name.compareTo(y.name);
+				}
 				return y.name.compareTo(x.name);
-			if(compareBy.equals("partNum"))
-				if(order.equals("ascending") return x.partNum.compareTo(y.partNum);
+			}
+			if(compareBy.equals("partNum")) {
+				if(order.equals("ascending")) {
+					return x.partNum.compareTo(y.partNum);
+				}
 				return y.partNum.compareTo(x.partNum);
-			if(compareBy.equals("link"))
-				if(order.equals("ascending") return x.link.compareTo(y.link);
+			}
+			if(compareBy.equals("link")) {
+				if(order.equals("ascending")) {
+					return x.link.compareTo(y.link);
+				}
 				return y.link.compareTo(x.link);
+			}
 			return 0;
 		}
 	}

@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 public class test {
 	private static Scanner scan;
@@ -5,7 +6,6 @@ public class test {
 	public static void main (String[] args) {
 		scan = new Scanner(System.in);
 		System.out.println("Welcome to the Team 5181 shop inventory");
-		storage = new Inventory();
 		printMenu();
 		dispatch(scan.nextInt());
 	}
@@ -30,45 +30,33 @@ public class test {
 				System.out.println("Bye!");
 				break;
 			case 1:
-				storage=new Inventory();
+				storage=new Inventory("main");
 				break;
 			case 2:
-				String s;
-				System.out.println("Input a criteria for sorting");
-				s=scan.next();
-				storage.sort(s);
-				break;
-			case 3:
 				System.out.print("Input your search request");
-				List<Item> r=storage.search(scan.next);
+				List<Item> r=storage.search(scan.next());
 				for(int i=0;i<r.size();i++){
 					System.out.println(r.get(i));
 				}
 				break;
-			case 4:
+			case 3:
 				storage.display();
 				break;
-			case 5:
-				String s;
-				System.out.println("Input a criteria for sorting");
-				s=scan.next();
-				storage.sort(s,"descending");
-				break;
-			case 6:
+			case 4:
 				System.out.print("Enter the value to look for: ");
 				int oldVal=scan.nextInt();
 				System.out.println("Enter the value to replace it with");
 				int newVal=scan.nextInt();
 				list.replaceFirst(oldVal,newVal);
 				break;
-			case 7:
+			case 5:
 				System.out.print("Enter the value to look for: ");
 				oldVal=scan.nextInt();
 				System.out.println("Enter the value to replace it with");
 				newVal=scan.nextInt();
 				list.replaceAll(oldVal,newVal);
 				break;
-			case 8:
+			case 6:
 				int moreItems = 1;
 				while (moreItems == 1) {
 					storage.add(createItem());
@@ -76,17 +64,17 @@ public class test {
 					moreItems = scan.nextInt();
 				}
 				break;
-			case 9:
+			case 7:
 				System.out.println("Enter an integer to remove from the list.");
 				oldVal=scan.nextInt();
 				list.removeFirst(oldVal);
 				break;
-			case 10:
+			case 8:
 				System.out.println("Enter an integer to remove from the list.");
 				oldVal=scan.nextInt();
 				list.removeAll(oldVal);
 				break;
-			case 11:
+			case 9:
 				System.out.println("Enter an integer to add to the list.");
 				newVal=scan.nextInt();
 				list.addInOrder(newVal);
