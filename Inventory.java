@@ -1,13 +1,30 @@
 import java.util.*;
 public class Inventory {
 	int totalValue;
-	private final int MAX_ITEMS;
+	final int MAX_ITEMS;
 	int numItems;
 	ArrayList<Item> items;
 	public Inventory(){
 		totalValue=0;
 		items=new ArrayList<Item>();
 		MAX_ITEMS=500;
+		numItems=0;
+	}
+	public Inventory(ArrayList<Item> i){
+		totalValue=0;
+		numItems=0;
+		for(int j=0;j<i.size();j++){
+			totalValue+=i.get(j).unit_cost*i.get(j).quantity;
+			numItems+=i.get(j).quantity;
+		}
+		items=i;
+		MAX_ITEMS=500;
+	}
+	public Inventory(Inventory i){
+		totalValue=i.totalValue;
+		items=i.items;
+		MAX_ITEMS=i.MAX_ITEMS;
+		numItems=i.numItems;
 	}
 	public boolean addItem(Item i) {
 		if(numItems==MAX_ITEMS)
@@ -40,26 +57,56 @@ public class Inventory {
 	public void display() {
 		System.out.println("\n--------------------\n     Inventory:     \nPart Name\t|Quantity\t|Part Number\t|Unit Cost\t|Link");
 		for(int i=0;i<items.size();i++){
-			System.out.println(items.get(i)
+			System.out.println(items.get(i).name+"\t"+items.get(i).quantity+"\t"+items.get(i).partNum+"\t"+items.get(i).unit_cost+"\t"+items.get(i).link);
 		}
+		System.out.println("--End of Inventory--);
 	}
-	//searches the inventory and returns an unsorted array list of items that meet the search criteria
+	//searches the inventory and returns an array list of items that meet the search criteria sorted by relevance
 	public ArrayList<Item> search(String searchCriteria){
+		int relevance=0;
 		for(int i=0;i<items.size();i++){
-			
+			if(items.get(i).name.contains(searchCriteria)) relevance+=3;
+			if(items.get(i).name.equals(searchCriteria)) relevance+=5;
+			if(items.get(i).partNum.contains(searchCriteria)) relevance+=3;
+			if(items.get(i).partNum.equals(searchCriteria)) relevance+=5;
+			if(items.get(i).link.contains(searchCriteria)) relevance+=3;
+			if(items.get(i).link.equals(searchCriteria)) relevance+=5;
+			if(Math.abs(items.get(i).quantity-Integer.parseInt(searchCriteria))<2) relevance+=2;
+			if(items.get(i).unit_cost==Integer.parseInt(searchCriteria)) relevance+=5;
+			if(Math.abs(items.get(i).unit_cost-Integer.parseInt(searchCriteria))<2) relevance+=2;
+			if(items.get(i).quantity==Integer.parseInt(searchCriteria)) relevance+=5;
+			for(int j=0;j<items.get(i).tags.length;j++){
+				if(items.get(i).tags[j].equals(searchCriteria)) relevance++;
+			}
 		}
 	}
 	//searches the inventory and returns a priority queue of items that meet the search criteria sorted by a given metric
 	public PriorityQueue<Item> search(String searchCriteria, String sortBy){
 		PriorityQueue<Item> results=new PriorityQueue<Item>(10, new compareItems(sortBy));
+		for(int i=0;i<items.size();i++){
+			if(items.get(i).name.equals(searchCriteria)) results.add(items.get(i));
+			if(items.get(i).partNum.equals(searchCriteria)) results.add(items.get(i));
+			if(items.get(i).link.equals(searchCriteria)) results.add(items.get(i));
+			if(items.get(i).unit_cost==Integer.parseInt(searchCriteria)) results.add(items.get(i));
+			if(items.get(i).quantity==Integer.parseInt(searchCriteria)) results.add(items.get(i));
+			for(int j=0;j<items.get(i).tags.length;j++){
+				if(items.get(i).tags[j].equals(searchCriteria)) results.add(items.get(i));
+			}
+		}
 		return results;
 	}
 	public PriorityQueue<Item> search(String searchCriteria, String sortBy, int numResults){
 		PriorityQueue<Item> results=new PriorityQueue<Item>(numResults, new compareItems(sortBy));
 		//iterates through items and adds items that meet the search criteria to results
 		for(int i=0;i<items.size();i++){
-			//if(/*some expression */)
-				//results.add(items.get(i));
+			if(items.get(i).name.equals(searchCriteria)) results.add(items.get(i));
+			if(items.get(i).partNum.equals(searchCriteria)) results.add(items.get(i));
+			if(items.get(i).link.equals(searchCriteria)) results.add(items.get(i));
+			if(items.get(i).unit_cost==Integer.parseInt(searchCriteria)) results.add(items.get(i));
+			if(items.get(i).quantity==Integer.parseInt(searchCriteria)) results.add(items.get(i));
+			for(int j=0;j<items.get(i).tags.length;j++){
+				if(items.get(i).tags[j].equals(searchCriteria)) results.add(items.get(i));
+			}
 		}
 		return results;
 	}
@@ -83,6 +130,21 @@ public class Inventory {
 			if(compareBy.equals("dateTimeEntered"))
 				if(order.equals("ascending") return x.dateTimeEntered.compareTo(y.dateTimeEntered);
 				return y.dateTimeEntered.compareTo(x.dateTimeEntered);
+			if(compareBy.equals("dateTimeRetrieved"))
+				if(order.equals("ascending") return x.dateTimeRetrieved.compareTo(y.dateTimeRetrieved);
+				return y.dateTimeRetrieved.compareTo(x.dateTimeRetrieved);
+			if(compareBy.equals("dateTimeReturned"))
+				if(order.equals("ascending") return x.dateTimeReturned.compareTo(y.dateTimeReturned);
+				return y.dateTimeReturned.compareTo(x.dateTimeReturned);
+			if(compareBy.equals("name"))
+				if(order.equals("ascending") return x.name.compareTo(y.name);
+				return y.name.compareTo(x.name);
+			if(compareBy.equals("partNum"))
+				if(order.equals("ascending") return x.partNum.compareTo(y.partNum);
+				return y.partNum.compareTo(x.partNum);
+			if(compareBy.equals("link"))
+				if(order.equals("ascending") return x.link.compareTo(y.link);
+				return y.link.compareTo(x.link);
 			return 0;
 		}
 	}
